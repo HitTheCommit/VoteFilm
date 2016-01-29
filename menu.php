@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <?php
+	include('contadorVotos.php');
+	
+	include('conexion.php');
 	session_start();
+	$porCientos = contarVotos($host, $user, $pw, $db);
+	
+
 ?>
 <html>
 	<head>
@@ -22,6 +28,9 @@
 			.messages { list-style-type: none; margin: 0; padding: 0; }
 			.messages li { padding: 5px 10px; }
 			.messages li:nth-child(odd) { background: #eee; }
+			#resultados{
+				margin-top: -1%;
+			}
 		</style>
 	</head>
 	<body>
@@ -59,7 +68,9 @@
 								<div class="caption">
 									<h3>Ficha:</h3>
 									<p>...</p>
-									<button class="btn btn-primary" role="button">Vote</button>
+									<form  method="post" action="votoControl.php">
+										<input class="btn btn-info" type="submit" name ="votTheRevenant" value="Votar">
+									</form>
 								</div>
 							</div>
 						</div>
@@ -74,7 +85,9 @@
 								<div class="caption">
 									<h3>Ficha:</h3>
 									<p>...</p>
-									<button class="btn btn-primary" role="button">Vote</button>
+									<form  method="post" action="votoControl.php">
+										<input class="btn btn-info" type="submit" name ="votBrooklyn" value="Votar">
+									</form>
 								</div>
 							</div>
 						</div>
@@ -82,46 +95,50 @@
 				</div>
 			
 			
-				<div class="col-md-4"style="left:64%; position:fixed; width:29%;">
+				<div id ="resultados"class="col-md-4"style="left:64%; position:fixed; width:29%;">
 					<h4>Resultados de la votación:</h4>
 					<h5>The Revenant</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['0'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['0'] . "%;'"; ?>>
+							<?php echo $porCientos['0'] . '%'; ?>
 						</div>
 					</div>
 					<h5>Brooklyn</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['1'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['1'] . "%;'"; ?>>
+							<?php echo $porCientos['1'] . '%'; ?>
+						</div>
+					</div>
+					<h5>El puente de los espías</h5>
+					<div class="progress">
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['2'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['2'] . "%;'"; ?>>
+							<?php echo $porCientos['2'] . '%'; ?>
 						</div>
 					</div>
 					<h5>Spotlight</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['3'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['3'] . "%;'"; ?>>
+							<?php echo $porCientos['3'] . '%'; ?>
 						</div>
 					</div>
 					<h5>The Big Short</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['4'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['4'] . "%;'"; ?>>
+							<?php echo $porCientos['4'] . '%'; ?>
 						</div>
 					</div>
 					<h5>Mad Max: Fury on Road</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['6'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['6'] . "%;'"; ?>>
+							<?php echo $porCientos['6'] . '%'; ?>
 						</div>
 					</div>
 					<h5>The Martian</h5>
 					<div class="progress">
-						<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-							60%
+						<div class="progress-bar" role="progressbar" <?php echo "aria-valuenow=" . $porCientos['5'] . "%;'"; ?> aria-valuemin="0" aria-valuemax="100" <?php echo "style='width:" . $porCientos['5'] . "%;'"; ?>>
+							<?php echo $porCientos['5'] . '%'; ?>
 						</div>
 					</div>
-					<h4>Numero de votos:</h4>
-					<span id="votosTotales"></span>
 				</div>
 			</div>
 			<div class="row">
@@ -135,7 +152,9 @@
 									<div class="caption">
 										<h3>Ficha:</h3>
 										<p>...</p>
-										<button class="btn btn-primary" role="button">Vote</button>
+										<form  method="post" action="votoControl.php">
+											<input class="btn btn-info" type="submit" name ="votElPuenteDeLosEspias" value="Votar">
+										</form>
 									</div>
 								</div>
 							</div>
@@ -150,7 +169,9 @@
 									<div class="caption">
 										<h3>Ficha:</h3>
 										<p>...</p>
-										<button class="btn btn-primary" role="button">Vote</button>
+										<form  method="post" action="votoControl.php">
+											<input class="btn btn-info" type="submit" name ="votSpotlight" value="Votar">
+										</form>
 									</div>
 								</div>
 							</div>
@@ -165,7 +186,9 @@
 									<div class="caption">
 										<h3>Ficha:</h3>
 										<p>...</p>
-										<button class="btn btn-primary" role="button">Vote</button>
+										<form  method="post" action="votoControl.php">
+											<input class="btn btn-info" type="submit" name ="votTheBigShort" value="Votar">
+										</form>
 									</div>
 								</div>
 							</div>
@@ -180,7 +203,9 @@
 									<div class="caption">
 										<h3>Ficha:</h3>
 										<p>...</p>
-										<button class="btn btn-primary" role="button">Vote</button>
+										<form  method="post" action="votoControl.php">
+											<input class="btn btn-info" type="submit" name ="votMadMax" value="Votar">
+										</form>
 									</div>
 								</div>
 							</div>
@@ -195,7 +220,9 @@
 									<div class="caption">
 										<h3>Ficha:</h3>
 										<p>...</p>
-										<button class="btn btn-primary" role="button">Vote</button>
+										<form  method="post" action="votoControl.php">
+											<input class="btn btn-info" type="submit" name ="votMartian" value="Votar">
+										</form>
 									</div>
 								</div>
 							</div>
